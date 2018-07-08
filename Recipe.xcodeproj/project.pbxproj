@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		875C198220F25B08008CAFB9 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C198120F25B08008CAFB9 /* CustomCell.swift */; };
+		875C198520F25FC4008CAFB9 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C198420F25FC4008CAFB9 /* Recipe.swift */; };
+		875C198720F26094008CAFB9 /* RecipeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C198620F26094008CAFB9 /* RecipeManager.swift */; };
+		875C198920F29899008CAFB9 /* NSUserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875C198820F29899008CAFB9 /* NSUserDefaultManager.swift */; };
 		8768750420F23B5600E41A07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768750320F23B5600E41A07 /* AppDelegate.swift */; };
 		8768750620F23B5600E41A07 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768750520F23B5600E41A07 /* ViewController.swift */; };
 		8768750920F23B5600E41A07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8768750720F23B5600E41A07 /* Main.storyboard */; };
@@ -14,6 +18,8 @@
 		8768750E20F23B5600E41A07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8768750C20F23B5600E41A07 /* LaunchScreen.storyboard */; };
 		8768751920F23B5600E41A07 /* RecipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768751820F23B5600E41A07 /* RecipeTests.swift */; };
 		8768752420F23B5600E41A07 /* RecipeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768752320F23B5600E41A07 /* RecipeUITests.swift */; };
+		879B8D5320F24D89003F9C97 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B8D5220F24D89003F9C97 /* AddViewController.swift */; };
+		879B8D5520F24DAD003F9C97 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879B8D5420F24DAD003F9C97 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		875C198120F25B08008CAFB9 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		875C198420F25FC4008CAFB9 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		875C198620F26094008CAFB9 /* RecipeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeManager.swift; sourceTree = "<group>"; };
+		875C198820F29899008CAFB9 /* NSUserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUserDefaultManager.swift; sourceTree = "<group>"; };
 		8768750020F23B5600E41A07 /* Recipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8768750320F23B5600E41A07 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8768750520F23B5600E41A07 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +57,8 @@
 		8768751F20F23B5600E41A07 /* RecipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8768752320F23B5600E41A07 /* RecipeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeUITests.swift; sourceTree = "<group>"; };
 		8768752520F23B5600E41A07 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		879B8D5220F24D89003F9C97 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		879B8D5420F24DAD003F9C97 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +86,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		875C198320F25F9C008CAFB9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				875C198420F25FC4008CAFB9 /* Recipe.swift */,
+				875C198620F26094008CAFB9 /* RecipeManager.swift */,
+				875C198820F29899008CAFB9 /* NSUserDefaultManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		876874F720F23B5500E41A07 = {
 			isa = PBXGroup;
 			children = (
@@ -97,12 +119,16 @@
 		8768750220F23B5600E41A07 /* Recipe */ = {
 			isa = PBXGroup;
 			children = (
+				875C198320F25F9C008CAFB9 /* Model */,
 				8768750320F23B5600E41A07 /* AppDelegate.swift */,
 				8768750520F23B5600E41A07 /* ViewController.swift */,
 				8768750720F23B5600E41A07 /* Main.storyboard */,
 				8768750A20F23B5600E41A07 /* Assets.xcassets */,
 				8768750C20F23B5600E41A07 /* LaunchScreen.storyboard */,
 				8768750F20F23B5600E41A07 /* Info.plist */,
+				879B8D5220F24D89003F9C97 /* AddViewController.swift */,
+				879B8D5420F24DAD003F9C97 /* DetailViewController.swift */,
+				875C198120F25B08008CAFB9 /* CustomCell.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -258,6 +284,12 @@
 			files = (
 				8768750620F23B5600E41A07 /* ViewController.swift in Sources */,
 				8768750420F23B5600E41A07 /* AppDelegate.swift in Sources */,
+				875C198220F25B08008CAFB9 /* CustomCell.swift in Sources */,
+				875C198520F25FC4008CAFB9 /* Recipe.swift in Sources */,
+				875C198720F26094008CAFB9 /* RecipeManager.swift in Sources */,
+				875C198920F29899008CAFB9 /* NSUserDefaultManager.swift in Sources */,
+				879B8D5320F24D89003F9C97 /* AddViewController.swift in Sources */,
+				879B8D5520F24DAD003F9C97 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +472,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neroxe.Recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -458,7 +490,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.neroxe.Recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
