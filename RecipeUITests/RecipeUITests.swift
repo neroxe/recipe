@@ -9,28 +9,74 @@
 import XCTest
 
 class RecipeUITests: XCTestCase {
-        
+    
+    var app:XCUIApplication? = nil
+    
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app = XCUIApplication()
+        app?.launch()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        app = nil
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func test_should_show_detailView_after_click_on_cell() {
+        let table = app?.tables["mainTable"]
+        table?.children(matching: .cell).element(boundBy: 0).staticTexts["test2"].tap()
+        app?.navigationBars["test2"].buttons["Recipes"].tap()
+    }
+    
+    func test_should_add_recipe_after_fill_in_the_form() {
+        let table = app?.tables["mainTable"]
+        let tablesSize = table?.cells.count
+        app?.navigationBars["Recipes"].buttons["Add"].tap()
+        let element = app?.otherElements.containing(.navigationBar, identifier:"Add Recipe").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
+        let textField = element?.children(matching: .textField).element
+        textField?.tap()
+        textField?.typeText("testTextFieldAdd")
+        let textView = element?.children(matching: .textView).element
+        textView?.tap()
+        textView?.typeText("testTextViewAdd")
+        app?.navigationBars["Add Recipe"].buttons["Done"].tap()
+        app?.buttons["Add"].tap()
+        let addRecipeNavigationBar = app?.navigationBars["Add Recipe"]
+        addRecipeNavigationBar?.buttons["Recipes"].tap()
+        XCTAssertEqual(table?.cells.count, tablesSize!+1)
+    }
+    
+    func test_should_remove_recipe_after_swipe_left() {
+        addRecipe()
+        let maintableTable = app?.tables["mainTable"]
+        let tablesSize = maintableTable?.cells.count
+        if(tablesSize! > 0){
+            maintableTable?.staticTexts["testTextFieldRemove"].swipeLeft()
+            maintableTable?.buttons["Delete"].tap()
+            XCTAssertEqual(maintableTable?.cells.count, tablesSize!-1)
+        }
+        else{
+            XCTAssertEqual(tablesSize, 0)
+        }
+    }
+    
+    func addRecipe() {
+        app?.navigationBars["Recipes"].buttons["Add"].tap()
+        let element = app?.otherElements.containing(.navigationBar, identifier:"Add Recipe").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
+        let textField = element?.children(matching: .textField).element
+        textField?.tap()
+        textField?.typeText("testTextFieldRemove")
+        let textView = element?.children(matching: .textView).element
+        textView?.tap()
+        textView?.typeText("testTextViewRemove")
+        app?.navigationBars["Add Recipe"].buttons["Done"].tap()
+        app?.buttons["Add"].tap()
+        let addRecipeNavigationBar = app?.navigationBars["Add Recipe"]
+        addRecipeNavigationBar?.buttons["Recipes"].tap()
     }
     
 }
+

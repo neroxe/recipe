@@ -11,18 +11,23 @@ import UIKit
 class RecipeManager: NSObject {
     static var recipes = [Recipe]()
     
-    class func AddRecipe(title: String,content: String){
+    static func AddRecipe(title: String,content: String){
         let recipe = Recipe(title: title, content: content)
         recipes.append(recipe)
     }
-    class func RemoveRecipe(id: Int){
+
+    static func AddRecipe(_ recipe: Recipe){
+        recipes.append(recipe)
+    }
+    
+    static func RemoveRecipe(id: Int){
         recipes.remove(at: id)
     }
-    class func size() -> Int{
+    static func size() -> Int{
         return recipes.count
     }
     
-    class func getRecipe(id: Int) -> Recipe{
+    static func getRecipe(id: Int) -> Recipe{
         if(recipes.count>0){
             return recipes[id]
         }

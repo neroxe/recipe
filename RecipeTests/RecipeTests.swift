@@ -11,9 +11,15 @@ import XCTest
 
 class RecipeTests: XCTestCase {
     
+    var storage = UserDefaultsMock() as UserDefaultsProtocol
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        RecipeManager.recipes = [Recipe]()
+        RecipeManager.AddRecipe(Recipe(title: "item1", content: "content1"))
+        RecipeManager.AddRecipe(Recipe(title: "item2", content: "content2"))
+        NSUserDefaultManager.setStorage(storage: storage)
+        NSUserDefaultManager.synchronize()
     }
     
     override func tearDown() {
@@ -21,16 +27,78 @@ class RecipeTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func test_should_return_count_1_when_add_recipe() {
+        let recipe = Recipe(title: "test1", content: "test2")
+        RecipeManager.AddRecipe(recipe)
+        XCTAssertEqual(RecipeManager.size(), 3)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_should_return_details_when_create_recipe() {
+        let recipe = Recipe(title: "test1", content: "test2")
+        XCTAssertEqual(recipe.title, "test1")
+        XCTAssertEqual(recipe.content, "test2")
+    }
+    
+    func test_return_0_when_delete_recipe(){
+        let recipe = Recipe(title: "test1", content: "test2")
+        RecipeManager.AddRecipe(recipe)
+        RecipeManager.RemoveRecipe(id: 0)
+        XCTAssertEqual(RecipeManager.size(), 2)
+    }
+    
+    func test_return_details_when_get_recipe(){
+        let recipe = Recipe(title: "test1", content: "test2")
+        RecipeManager.AddRecipe(recipe)
+        let recipeFromRecipeManager =  RecipeManager.getRecipe(id: 2)
+        XCTAssertEqual(recipeFromRecipeManager.title, recipe.title)
+        XCTAssertEqual(recipeFromRecipeManager.content, recipe.content)
+    }
+
+    func test_should_return_2_without_synchro(){
+        let recipe = Recipe(title: "test1", content: "test2")
+        RecipeManager.AddRecipe(recipe)
+        let defaultUsersRecipes = NSUserDefaultManager.userDefault.theObject(forKey: NSUserDefaultManager.key)
+        if let recipes = NSKeyedUnarchiver.unarchiveObject(with: defaultUsersRecipes as! Data) as? [Recipe]{
+            XCTAssertEqual(recipes.count, 2)
         }
+        
     }
     
+    func test_should_return_3_with_synchro(){
+        let recipe = Recipe(title: "test1", content: "test2")
+        RecipeManager.AddRecipe(recipe)
+        NSUserDefaultManager.synchronize()
+        let defaultUsersRecipes = NSUserDefaultManager.userDefault.theObject(forKey: NSUserDefaultManager.key)
+        if let recipes = NSKeyedUnarchiver.unarchiveObject(with: defaultUsersRecipes as! Data) as? [Recipe]{
+            XCTAssertEqual(recipes.count, 3)
+        }
+        
+    }
+    
+}
+
+class UserDefaultsMock: NSObject, UserDefaultsProtocol {
+    private var dict = [String:Any?]()
+    
+    deinit {
+        dict.removeAll()
+    }
+
+    func theObject(forKey key: String) -> Any? {
+        if let object = dict[key] {
+            return object
+        }
+        return nil
+    }
+    
+    func setTheObject(_ object: Any, forKey key: String) {
+        dict[key] = object
+    }
+    
+    func removeTheObject(forKey key: String) {
+        dict.removeValue(forKey: key)
+    }
+    
+    func synchronizeAll() {
+    }
 }
