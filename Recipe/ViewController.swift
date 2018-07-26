@@ -17,6 +17,32 @@ class ViewController: UITableViewController {
         tableView.backgroundView = UIImageView(image: UIImage(named: "breads"))
         
         NSUserDefaultManager.prepare()
+        initialiseiCloud()
+    }
+    
+    func initialiseiCloud(){
+        let fileManager = FileManager.default
+        let iCloudURL = fileManager.ubiquityIdentityToken
+        if(iCloudURL != nil && Reachability.isConnectedToNetwork()){
+            let store = NSUbiquitousKeyValueStore.default
+            let notification = NotificationCenter.default
+            notification.addObserver(self, selector: #selector(self.updateFromiCloud), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: store)
+            store.synchronize()
+        }else{
+            let message = "iCloud Not reachable"
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            self.present(alert, animated: true)
+            let duration: Double = 5
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+                alert.dismiss(animated: true)
+            }
+        }
+    }
+    
+    @objc func updateFromiCloud(notification:Notification){
+        iCloudManager.getFromCloud()
+        NSUserDefaultManager.synchronize()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,6 +86,7 @@ class ViewController: UITableViewController {
             RecipeManager.RemoveRecipe(id: indexPath.item)
             tableView.deleteRows(at: [indexPath], with: .fade)
             NSUserDefaultManager.synchronize()
+            iCloudManager.sendToCloud()
         }
     
     }

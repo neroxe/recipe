@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddViewController: UIViewController {
+class AddViewController: UIViewController,UIDocumentPickerDelegate {
 
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var recipeContent: UITextView!
@@ -53,14 +53,39 @@ class AddViewController: UIViewController {
     @IBAction func addRecipe(_ sender: Any) {
         addAnimation.startAnimating()
         RecipeManager.AddRecipe(title: titleText.text!, content: recipeContent.text)
+        NSUserDefaultManager.synchronize()
+        iCloudManager.sendToCloud()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.addAnimation.stopAnimating()
             self.recipeContent.text = ""
             self.titleText.text = ""
         }
-        NSUserDefaultManager.synchronize()
+        
     }
     
+    @IBAction func iCloudDocs(_ sender: Any) {
+        let documentPicker:UIDocumentPickerViewController = UIDocumentPickerViewController(documentTypes: ["public.text"], in: UIDocumentPickerMode.import)
+        documentPicker.delegate = self
+        documentPicker.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if(controller.documentPickerMode == UIDocumentPickerMode.import){
+            let content = openFile(urls[0].path,utf8: String.Encoding.utf8)
+            recipeContent.text = content
+        }
+    }
+    
+    func openFile(_ path:String,utf8:String.Encoding = String.Encoding.utf8) -> String? {
+        do {
+            return try String(contentsOfFile: path, encoding: utf8)
+        }
+        catch let error as NSError {
+            print("Something went wrong: \(error)")
+            return nil
+        }
+    }
     
     func handleButtonStates(){
         if(recipeContent.text != ""){

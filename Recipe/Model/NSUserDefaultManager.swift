@@ -12,17 +12,17 @@ public class NSUserDefaultManager: NSObject {
     static var userDefault:UserDefaultsProtocol = UserDefaults.standard
     static var key:String = "recipe_array"
     
-    static func synchronize(){
+    class func synchronize(){
         let data = NSKeyedArchiver.archivedData(withRootObject: RecipeManager.recipes)
         userDefault.setTheObject(data, forKey: key)
         userDefault.synchronizeAll()
     }
     
-    static func setStorage(storage:UserDefaultsProtocol){
+    class func setStorage(storage:UserDefaultsProtocol){
         NSUserDefaultManager.userDefault = storage;
     }
     
-    static func prepare(){
+    class func prepare(){
         if let rawRecipes = userDefault.theObject(forKey: key){
             if let recipes = NSKeyedUnarchiver.unarchiveObject(with: rawRecipes as! Data) as? [Recipe]{
                 RecipeManager.recipes = recipes

@@ -26,9 +26,10 @@ class RecipeUITests: XCTestCase {
     
     
     func test_should_show_detailView_after_click_on_cell() {
+        addRecipe("testClick")
         let table = app?.tables["mainTable"]
-        table?.children(matching: .cell).element(boundBy: 0).staticTexts["test2"].tap()
-        app?.navigationBars["test2"].buttons["Recipes"].tap()
+        table?.children(matching: .cell).element(boundBy: 0).staticTexts["testClick"].tap()
+        app?.navigationBars["testClick"].buttons["Recipes"].tap()
     }
     
     func test_should_add_recipe_after_fill_in_the_form() {
@@ -50,7 +51,7 @@ class RecipeUITests: XCTestCase {
     }
     
     func test_should_remove_recipe_after_swipe_left() {
-        addRecipe()
+        addRecipe("testTextFieldRemove")
         let maintableTable = app?.tables["mainTable"]
         let tablesSize = maintableTable?.cells.count
         if(tablesSize! > 0){
@@ -63,15 +64,15 @@ class RecipeUITests: XCTestCase {
         }
     }
     
-    func addRecipe() {
+    func addRecipe(_ titleLabel:String) {
         app?.navigationBars["Recipes"].buttons["Add"].tap()
         let element = app?.otherElements.containing(.navigationBar, identifier:"Add Recipe").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
         let textField = element?.children(matching: .textField).element
         textField?.tap()
-        textField?.typeText("testTextFieldRemove")
+        textField?.typeText(titleLabel)
         let textView = element?.children(matching: .textView).element
         textView?.tap()
-        textView?.typeText("testTextViewRemove")
+        textView?.typeText(titleLabel)
         app?.navigationBars["Add Recipe"].buttons["Done"].tap()
         app?.buttons["Add"].tap()
         let addRecipeNavigationBar = app?.navigationBars["Add Recipe"]

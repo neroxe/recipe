@@ -98,6 +98,9 @@
                                 <state key="normal" title="Add iCloud">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="iCloudDocs:" destination="mK2-oB-5eW" eventType="touchUpInside" id="bR4-I4-QfF"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCb-F8-Di5">
                                 <rect key="frame" x="0.0" y="527" width="375" height="70"/>
